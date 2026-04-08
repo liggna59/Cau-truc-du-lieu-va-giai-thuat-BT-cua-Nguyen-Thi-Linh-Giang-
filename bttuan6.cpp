@@ -38,4 +38,21 @@ void insertChronological(Node*& head, string name, float size, int time) {
     newNode->next = current->next;
     current->next = newNode;
 }
+//  Tính tổng kích thước
+float calculateTotalSize(Node* head) {
+    float totalSize = 0;
+    Node* current = head;
+    while (current != nullptr) {
+       totalSize += current->data.sizeMB;
+        current = current->next;
+    }
+    return totalSize;
+}
+// Xóa file có kích thước nhỏ nhất
+void removeSmallestFile(Node*& head) {
+    if (head == nullptr) return;
+    Node* minNode = head;
+    Node* minPrev = nullptr;
+    Node* current = head;
+    Node* prev = nullptr;
 
