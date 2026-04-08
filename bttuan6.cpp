@@ -21,4 +21,21 @@ Node* createNode(string name, float size, int time) {
     newNode->next = nullptr;
     return newNode;
 }
+//  Chèn file theo trật tự thời gian
+void insertChronological(Node*& head, string name, float size, int time) {
+    Node* newNode = createNode(name, size, time);
+    // Nếu danh sách rỗng hoặc file mới có thời gian cũ nhất
+    if (head == nullptr || head->data.timestamp >= newNode->data.timestamp) {
+        newNode->next = head;
+        head = newNode;
+        return;
+    }
+    // Duyệt tìm vị trí chèn
+    Node* current = head;
+    while (current->next != nullptr && current->next->data.timestamp < newNode->data.timestamp) {
+        current = current->next;
+    }
+    newNode->next = current->next;
+    current->next = newNode;
+}
 
