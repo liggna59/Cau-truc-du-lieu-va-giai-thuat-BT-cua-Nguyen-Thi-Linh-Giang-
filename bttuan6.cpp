@@ -73,4 +73,28 @@ void removeSmallestFile(Node*& head) {
     }
     delete minNode;
 }
+// Sao lưu vào USB
+void backupToUSB(Node*& head) {
+    float currentSize = calculateTotalSize(head);
+    cout << "Kich thuoc thu muc hien tai: " << currentSize << " MB" << endl;
+    while (currentSize > USB_CAPACITY_MB) {
+        cout << "Vuot qua 32GB! Tien hanh loai bo file nho nhat..." << endl;
+        removeSmallestFile(head);
+        currentSize = calculateTotalSize(head); // Cập nhật lại kích thước các file
+    }
+    cout << "Sao luu thanh cong! Tong dung luong sao luu: " << currentSize << " MB" << endl;
+}
+//in danh sách file
+void printDirectory(Node* head) {
+    cout << "--- Danh sach file trong D>Document ---" << endl;
+    Node* current = head;
+    while (current != nullptr) {
+        cout << "[" << current->data.timestamp << "] " << current->data.name;
+             << " - " << current->data.sizeMB << " MB\n";
+        current = current->next;
+    }
+    cout << "---" << endl;
+}
+int main() {
+    Node* documentDir = nullptr;
 
