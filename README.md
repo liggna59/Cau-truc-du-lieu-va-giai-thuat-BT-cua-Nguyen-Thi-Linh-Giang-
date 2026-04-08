@@ -48,6 +48,3 @@ Sử dụng giải thuật tìm giá trị cực tiểu trên danh sách liên k
 ### 4.3. Giải thuật Sao lưu vào USB (`backupToUSB`)
 * **Logic:** Kiểm tra điều kiện `totalSize > 32768`.
 * **Thực thi:** Chừng nào tổng dung lượng còn vượt ngưỡng, hệ thống tự động gọi hàm `removeSmallestFile`. Đây là chiến lược loại bỏ file chiếm ít không gian nhất để tối ưu hóa số lượng file còn lại trong USB.
-
-## 5. Hướng dẫn cài đặt
-1. Biên dịch mã nguồn: `g++ bttuan6.cpp -o bttuan6.exe`
