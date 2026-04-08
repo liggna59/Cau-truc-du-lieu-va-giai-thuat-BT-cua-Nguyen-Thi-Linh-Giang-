@@ -55,4 +55,22 @@ void removeSmallestFile(Node*& head) {
     Node* minPrev = nullptr;
     Node* current = head;
     Node* prev = nullptr;
+   // Tìm node nhỏ nhất và node đứng trước nó
+    while (current != nullptr) {
+        if (current->data.sizeMB < minNode->data.sizeMB) {
+            minNode = current;
+            minPrev = prev;
+        }
+        prev = current;
+        current = current->next;
+    }
+    cout << "  -> Da xoa file: " << minNode->data.name << " (" << minNode->data.sizeMB << " MB)" << endl;
+   // Xóa node nhỏ nhất khỏi danh sách
+    if (minPrev == nullptr) { // Node nhỏ nhất là Head
+        head = head->next;
+    } else {
+        minPrev->next = minNode->next;
+    }
+    delete minNode;
+}
 
