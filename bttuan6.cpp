@@ -4,7 +4,7 @@ using namespace std;
 const float dungluongusb = 32768.0f;
 struct File{
     string ten;
-    double kthuocteptinh;
+    double kthuocteptin;
     int moctgian;
 };
 struct Node{
@@ -16,7 +16,7 @@ Node* taoNodemoi(string ten, double kthuocteptin, int moctgian){
     Node* newNode = new Node;
     newNode ->data.ten = ten;
     NewNode -> data.kthuocteptin = kthuocteptin; 
-    newNode -> data.mocthoigian = moctgian;
+    newNode -> data.moctgian = moctgian;
     newNode->next = nullptr;
     return newNode;
 }
@@ -53,7 +53,7 @@ void xoaFilenhonhat(Node*&head){
     Node*prev=nullptr;
     while (htai!=nullptr)
     {
-    if(htai->data.kthuocteptin<minNode->data.kthuocteptinh)
+    if(htai->data.kthuocteptin<minNode->data.kthuocteptin)
     {
         minNode=htai;
         minPrev=prev;
@@ -61,8 +61,8 @@ void xoaFilenhonhat(Node*&head){
     prev=htai;
     htai=htai->next;
     }
-    cout<<"-> Tu dong xoa file nho nhat: " << minNode->data.ten<<"(" <<minNode->data.kthuocteptinh<<"MB)"<<endl;
-    if(minPrev=nullptr)
+    cout<<"-> Tu dong xoa file nho nhat: " << minNode->data.ten<<"(" <<minNode->data.kthuocteptin<<"MB)"<<endl;
+    if(minPrev==nullptr)
     {
         head = head->next;
     } else{
@@ -70,7 +70,7 @@ void xoaFilenhonhat(Node*&head){
     }
     delete minNode;
 }
-void saoluuUSB(Node*head)
+void saoluuUSB(Node*&head)
 {
     double kthuochtai = tinhtongdungluong(head);
     cout<<"Tong kthuoc file htai: "<< kthuochtai<<"MB"<<endl;
@@ -81,4 +81,52 @@ void saoluuUSB(Node*head)
     kthuochtai=tinhtongdungluong(head);
 } 
 cout<<"Sao luu thanh cong: Dung luong da dung:"<<kthuochtai<<"MB"<<dungluongusb<<"MB"<<endl; 
+}
+void inDS(Node*head)
+{
+    if(head==nullptr)
+    {
+        cout<<"(DS trong)"<<endl;
+        return;
+    }
+    node* htai=head;
+    while (htai!=nullptr)
+    {
+    cout<<htai->data.moctgian<<"-"<< htai-> data.name<<"()"<<htai->data.kthuocteptin<<"MB"<<endl;
+    htai=htai->next;
+    } 
+}
+int main() {
+    Node* head = nullptr; 
+    int n;
+    cout << "CHUONG TRINH SAO LUU USB" << endl;
+    cout << "Nhap so luong file ban muon them: ";
+    cin >> n;
+    for (int i = 0; i < n; i++) {
+        string ten;
+        double kthuocteptin;
+        int moctgian;
+        cout << "\nNhap thong tin file thu " << i + 1 << ":" << endl;
+        cout << " + Ten file: ";
+        cin.ignore(); 
+        getline(cin, ten);
+        cout << " + Dung luong (MB): ";
+        cin >> kthuocteptin;
+        cout << " + Moc thoi gian: ";
+        cin >> moctgian;
+        chentheotgian(head, ten, kthuocteptin, moctgian);
+    }
+    cout << "\nDANH SACH FILE DA NHAP" << endl;
+    inDS(head);
+    cout << "\nBAT DAU SAO LUU" << endl;
+    saoluuUSB(head);
+    cout << "\nDANH SACH CON LAI TRONG USB" << endl;
+    inDS(head);
+    while (head != nullptr) {
+        Node* temp = head;
+        head = head->next;
+        delete temp;
+    }
+    cout << "\nChuong trinh ket thuc" << endl;
+    return 0;
 }
