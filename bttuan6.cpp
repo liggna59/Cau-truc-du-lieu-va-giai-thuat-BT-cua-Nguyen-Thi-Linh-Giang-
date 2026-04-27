@@ -15,17 +15,17 @@ struct Node{
 Node* taoNodemoi(string ten, double kthuocteptin, int moctgian){
     Node* newNode = new Node;
     newNode ->data.ten = ten;
-    NewNode -> data.kthuocteptin = kthuocteptin; 
+    newNode -> data.kthuocteptin = kthuocteptin; 
     newNode -> data.moctgian = moctgian;
     newNode->next = nullptr;
     return newNode;
 }
 // Chèn file thoi tgian
 void chentheotgian(Node*& head, string ten, double kthuocteptin, int moctgian){
-    Node* newNode = taonodemoi(ten, kthuocteptin, moctgian);
+    Node* newNode = taoNodemoi(ten, kthuocteptin, moctgian);
     if(head==nullptr || head->data.moctgian>=newNode->data.moctgian){
         newNode->next = head;
-        head=NewNode;
+        head=newNode;
         return;
     }
     Node*htai=head;
@@ -89,10 +89,10 @@ void inDS(Node*head)
         cout<<"(DS trong)"<<endl;
         return;
     }
-    node* htai=head;
+    Node* htai=head;
     while (htai!=nullptr)
     {
-    cout<<htai->data.moctgian<<"-"<< htai-> data.name<<"()"<<htai->data.kthuocteptin<<"MB"<<endl;
+    cout<<htai->data.moctgian<<"-"<< htai-> data.ten<<"()"<<htai->data.kthuocteptin<<"MB"<<endl;
     htai=htai->next;
     } 
 }
