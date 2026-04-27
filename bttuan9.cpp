@@ -185,3 +185,32 @@ void XoaSVCungNgaySinh(List &ListSV) {
         }
     }
 }
+int main() {
+    List ListSV;
+    KhoiTao(ListSV);
+    cout << "Nhap va SX DS Sinh vien" << endl;
+    NhapListSV(ListSV);
+    SapXepListSV(ListSV);
+    cout << "DSSV sap xep tang dan theo MSSV" << endl;
+    InListSV(ListSV);
+    cout << "Them SV moi" << endl;
+    SinhVien svienmoi;
+    cout << "Nhap thong tin sinh vien moi can them vao danh sach:" << endl;
+    cout << "Ma SV: "; cin >> svienmoi.maSV;
+    cout << "Ho ten: "; cin.ignore(); cin.getline(svienmoi.hoTen, 50);
+    cout << "Gioi tinh (1: Nam, 0: Nu): "; cin >> svienmoi.gioiTinh;
+    cout << "Ngay sinh (ngay thang nam): "; cin >> svienmoi.ngaySinh.ngay >> svienmoi.ngaySinh.thang >> svienmoi.ngaySinh.nam;
+    cout << "Dia chi: "; cin.ignore(); cin.getline(svienmoi.diaChi, 100);
+    cout << "Lop: "; cin >> svienmoi.lop;
+    cout << "Khoa: "; cin >> svienmoi.khoa;
+    ThemSV(ListSV, svienmoi);
+    cout << "Danh sach sau khi them:" << endl;
+    InListSV(ListSV);
+    cout << "in ra DS Sinh vien cung ngay sinh" << endl;
+    InSVCungNgaySinh(ListSV);
+    cout << "Xoa SV cung ngay sinh" << endl;
+    XoaSVCungNgaySinh(ListSV);
+    cout << "Danh sach sau khi xoa cac sinh vien trung ngay sinh:" << endl;
+    InListSV(ListSV);
+    return 0;
+}
