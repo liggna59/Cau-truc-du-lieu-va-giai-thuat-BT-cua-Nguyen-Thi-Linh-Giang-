@@ -1,7 +1,3 @@
-Hiểu ý bạn rồi, mình sẽ điều chỉnh lại nội dung README.md sao cho chuẩn theo đúng cấu trúc chuyên sâu, phân tích kỹ thuật mà bạn mong muốn. Với format này, nhìn vào sẽ thấy ngay tư duy giải thuật mạch lạc của một kỹ sư tương lai.
-
-Bạn copy nội dung dưới đây vào file README.md nhé:
-
 📂 Quản lý Thư mục Document và Sao lưu USB (Linked List)
 Dự án triển khai hệ thống quản lý tập tin trong thư mục mô phỏng bằng cấu trúc dữ liệu Danh sách liên kết đơn (Singly Linked List), giải quyết bài toán sắp xếp theo thời gian và tối ưu hóa không gian lưu trữ khi sao lưu.
 
