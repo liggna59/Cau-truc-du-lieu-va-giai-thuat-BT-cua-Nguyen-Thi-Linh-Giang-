@@ -70,3 +70,15 @@ void xoaFilenhonhat(Node*&head){
     }
     delete minNode;
 }
+void saoluuUSB(Node*head)
+{
+    double kthuochtai = tinhtongdungluong(head);
+    cout<<"Tong kthuoc file htai: "<< kthuochtai<<"MB"<<endl;
+    while (kthuochtai>dungluongusb)
+    {
+    cout<<"Canh bao: Vuot qua 32GB, giai phong bo nho..."<<endl;
+    xoaFilenhonhat(head);
+    kthuochtai=tinhtongdungluong(head);
+} 
+cout<<"Sao luu thanh cong: Dung luong da dung:"<<kthuochtai<<"MB"<<dungluongusb<<"MB"<<endl; 
+}
