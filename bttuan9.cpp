@@ -116,3 +116,31 @@ void ThemSV(List &ListSV, SinhVien svienmoi) {
         ListSV.last = newNode; 
     }
 }
+void InSVCungNgaySinh(List ListSV) {
+    bool timnguoitrungngaysinh = false; 
+    for (Node *i = ListSV.first; i != NULL; i = i->link) {
+        bool daktra = false;
+        for (Node *k = ListSV.first; k != i; k = k->link) {
+            if (i->data.ngaySinh.ngay == k->data.ngaySinh.ngay &&i->data.ngaySinh.thang == k->data.ngaySinh.thang &&i->data.ngaySinh.nam == k->data.ngaySinh.nam) {
+                daktra = true;
+                break;
+            }
+        }
+        if (daktra) continue; 
+        bool trungngaysinh = false;
+        for (Node *j = i->link; j != NULL; j = j->link) {
+            if (i->data.ngaySinh.ngay == j->data.ngaySinh.ngay &&i->data.ngaySinh.thang == j->data.ngaySinh.thang && i->data.ngaySinh.nam == j->data.ngaySinh.nam) {
+                                if (!trungngaysinh) {
+                    cout << "Sinh vien cung ngay sinh " << i->data.ngaySinh.ngay << "/"<< i->data.ngaySinh.thang << "/" << i->data.ngaySinh.nam << ":" << endl;
+                    cout << " + " << i->data.hoTen << " (" << i->data.maSV << ")" << endl;
+                    trungngaysinh = true;
+                    timnguoitrungngaysinh = true;
+                }
+                cout << " + " << j->data.hoTen << " (" << j->data.maSV << ")" << endl;
+            }
+        }
+    }
+    if (!timnguoitrungngaysinh) {
+        cout << "khong tim thay sinh vien cung ngay sinh" << endl;
+    }
+}
