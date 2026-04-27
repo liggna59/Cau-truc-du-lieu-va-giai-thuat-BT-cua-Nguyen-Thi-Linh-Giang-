@@ -31,4 +31,4 @@ Dựa trên giải thuật đã cài đặt:
 | 2 | Trường hợp M = 0 | N=5, M=0 | Người thắng: 5| Pass |
 | 3 | Trường hợp M = 2 | N=5, M=2 | Người thắng: 4 | Pass |
 | 4 | Trường hợp M = 3 | N=5, M=3 | Người thắng: 1 | Pass |
-| 5 | Dữ liệu lớn (N > 100k)| N=100.005, M=1| Phản hồi tức thì | Pass |
+| 5 | Dữ liệu lớn (N > 100k)| N=100.005, M=1| Phản hồi nhanh | Pass |
