@@ -36,3 +36,37 @@ void chentheotgian(Node*& head, string ten, double kthuocteptin, int moctgian){
     htai->next=newNode;
 }
 //Tính tổng dung lượng của các file hiện có 
+double tinhtongdungluong(Node*head){
+    double tongkthuoc = 0;
+    Node*htai=head;
+    while (htai != nullptr){
+        tongkthuoc += htai->data.kthuocteptin;
+        htai=htai->next;
+    }
+    return tongkthuoc;    
+}
+void xoaFilenhonhat(Node*&head){
+    if(head==nullptr) return;
+    Node*minNode=head;
+    Node*minPrev=nullptr;
+    Node*htai=head;
+    Node*prev=nullptr;
+    while (htai!=nullptr)
+    {
+    if(htai->data.kthuocteptin<minNode->data.kthuocteptinh)
+    {
+        minNode=htai;
+        minPrev=prev;
+    }
+    prev=htai;
+    htai=htai->next;
+    }
+    cout<<"-> Tu dong xoa file nho nhat: " << minNode->data.ten<<"(" <<minNode->data.kthuocteptinh<<"MB)"<<endl;
+    if(minPrev=nullptr)
+    {
+        head = head->next;
+    } else{
+        minPrev->next=minNode->next;
+    }
+    delete minNode;
+}
