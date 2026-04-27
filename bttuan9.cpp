@@ -67,7 +67,7 @@ void SapXepListSV(List &ListSV) {
         }
     }
 }
-void InListSV(List ListSV) {
+void InListSV(List &ListSV) {
     cout << left << setw(10) << "Ma SV" << setw(25) << "Ho Ten" << setw(15) << "Lop" << endl;
     cout << "-" << endl;
     Node *p = ListSV.first;
@@ -116,7 +116,7 @@ void ThemSV(List &ListSV, SinhVien svienmoi) {
         ListSV.last = newNode; 
     }
 }
-void InSVCungNgaySinh(List ListSV) {
+void InSVCungNgaySinh(List &ListSV) {
     bool timnguoitrungngaysinh = false; 
     for (Node *i = ListSV.first; i != NULL; i = i->link) {
         bool daktra = false;
@@ -142,5 +142,46 @@ void InSVCungNgaySinh(List ListSV) {
     }
     if (!timnguoitrungngaysinh) {
         cout << "khong tim thay sinh vien cung ngay sinh" << endl;
+    }
+}
+void XoaSVCungNgaySinh(List &ListSV) {
+    Node *htai = ListSV.first; 
+    while (htai != NULL) {
+        bool trungngaysinh = false;
+        Node *ktra = htai->link; 
+                while (ktra != NULL) {
+            if (htai->data.ngaySinh.ngay == ktra->data.ngaySinh.ngay &&htai->data.ngaySinh.thang == ktra->data.ngaySinh.thang &&htai->data.ngaySinh.nam == ktra->data.ngaySinh.nam) {
+                trungngaysinh = true;
+                break; 
+            }
+            ktra = ktra->link;
+        }
+        if (trungngaysinh) {
+            Ngay ngayCanXoa = htai->data.ngaySinh;
+            Node *tam = ListSV.first;
+            Node *truoc = NULL;
+            while (tam != NULL) {
+                if (tam->data.ngaySinh.ngay == ngayCanXoa.ngay &&tam->data.ngaySinh.thang == ngayCanXoa.thang &&tam->data.ngaySinh.nam == ngayCanXoa.nam) {
+                    Node *nutxoa = tam;
+                    if (truoc == NULL) { 
+                        ListSV.first = tam->link;
+                        tam = ListSV.first;
+                    } else { 
+                        truoc->link = tam->link;
+                        tam = truoc->link;
+                    } 
+                    if (nutxoa == ListSV.last) {
+                        ListSV.last = truoc; 
+                    }
+                    delete nutxoa; 
+                } else {
+                    truoc = tam;
+                    tam = tam->link;
+                }
+            }
+            htai = ListSV.first; 
+        } else {
+        htai = htai->link;
+        }
     }
 }
