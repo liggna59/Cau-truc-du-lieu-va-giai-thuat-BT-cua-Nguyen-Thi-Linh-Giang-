@@ -1,50 +1,34 @@
-
-
-## 1. Phân tích sơ bộ bài toán
-Yêu cầu bài toán là xây dựng hệ thống quản lý tập tin trong thư mục `D>Document` bằng cấu trúc dữ liệu **Danh sách liên kết đơn (Singly Linked List)**, đảm bảo các tính chất về thời gian và giới hạn dung lượng lưu trữ.
-
-### Tại sao sử dụng Danh sách liên kết đơn?
-* **Tính linh hoạt:** Thao tác chèn file mới (Copy-Paste) và loại bỏ file nhỏ nhất (Backup) được thực hiện liên tục. DSLK giúp cấp phát và giải phóng bộ nhớ động tối ưu hơn mảng tĩnh.
-* **Cơ chế hoạt động:** Mỗi file là một `Node`, danh sách luôn được duy trì theo thứ tự tăng dần của `timestamp`.
-
-
-## 2. Mô tả thuộc tính và cấu trúc dữ liệu
-
-### A. Cấu trúc dữ liệu File
-Mỗi tập tin được định nghĩa bởi cấu trúc `struct File` gồm:
-- `name` (string): Tên của tập tin.
-- `sizeMB` (float): Kích thước tập tin tính bằng Megabytes.
-- `timestamp` (int): Nhãn thời gian (số càng nhỏ thời gian càng cũ).
-
-### B. Cấu trúc Danh sách (Node)
-Mỗi nút trong danh sách liên kết gồm:
-- `data`: Chứa thông tin của một đối tượng `File`.
-- `next`: Con trỏ `Node*` lưu địa chỉ của phần tử kế tiếp.
-
-### 3. Mô tả các hàm thực thi chính
-
-`createNode`: Khởi tạo Node mới và cấp phát bộ nhớ bằng toán tử `new`. 
- `insertChronological` : Chèn file vào danh sách sao cho luôn đảm bảo trật tự thời gian. 
- `calculateTotalSize` :Duyệt danh sách để tính tổng dung lượng hiện có của thư mục. 
- `removeSmallestFile` : Tìm và xóa Node có `sizeMB` thấp nhất khỏi bộ nhớ bằng toán tử `delete`. 
- `backupToUSB`:  Kiểm soát dung lượng thư mục không vượt quá hằng số `USB_CAPACITY_MB` (32768 MB). 
-
-
-## 4. Phân tích giải thuật chi tiết
-
-### 4.1. Giải thuật Chèn theo thời gian (`insertChronological`)
-Để duy trì danh sách luôn có thứ tự, giải thuật thực hiện:
-1. **Bước 1:** Nếu danh sách rỗng hoặc `timestamp` của file mới nhỏ hơn nút `head`, chèn file mới làm `head`.
-2. **Bước 2:** Nếu không, dùng con trỏ `current` duyệt từ đầu danh sách.
-3. **Bước 3:** Tìm vị trí sao cho `current->next->timestamp` lớn hơn `timestamp` của file mới.
-4. **Bước 4:** Thực hiện chèn vào giữa: `newNode->next = current->next; current->next = newNode;`.
-### 4.2. Giải thuật Xóa file nhỏ nhất (`removeSmallestFile`)
-Sử dụng giải thuật tìm giá trị cực tiểu trên danh sách liên kết:
-1. Duyệt qua toàn bộ danh sách, sử dụng biến `minNode` để ghi nhớ địa chỉ Node có `sizeMB` nhỏ nhất.
-2. Sử dụng con trỏ `minPrev` để lưu lại nút đứng trước nút nhỏ nhất.
-3. Sau khi kết thúc vòng lặp, thực hiện nối nút `minPrev` với `minNode->next` để tách nút nhỏ nhất khỏi chuỗi liên kết.
-4. Giải phóng bộ nhớ của `minNode` bằng lệnh `delete`.
-
-### 4.3. Giải thuật Sao lưu vào USB (`backupToUSB`)
-* **Logic:** Kiểm tra điều kiện `totalSize > 32768`.
-* **Thực thi:** Chừng nào tổng dung lượng còn vượt ngưỡng, hệ thống tự động gọi hàm `removeSmallestFile`. Đây là chiến lược loại bỏ file chiếm ít không gian nhất để tối ưu hóa số lượng file còn lại trong USB.
+#BÀI TẬP CƠ BẢN
+### Test case: 
+| STT | Kịch bản kiểm thử | Dữ liệu đầu vào | Kết quả thực tế | Trạng thái |
+| :-- | :--- | :--- | :--- | :--- |
+| 1 | Sắp xếp theo MSSV | 20245, 20242, 20243 | Tự động sắp: 20242, 20243, 20245 | Pass |
+| 2 | Chèn sinh viên mới | Thêm SV Quan (20247) | Nằm đúng vị trí cuối danh sách | Pass |
+| 3 | Tìm trùng ngày sinh | 20/05/2006 | Liệt kê đúng SV Son và SV Son | Pass |
+| 4 | Xóa trùng ngày sinh | Xóa ngày 20/05/2006 | Hai SV trùng bị loại khỏi danh sách | Pass |
+#BÀI TẬP NÂNG CAO: BÀI TOÁN JOSEPHUS
+## 1. Thiết kế giải thuật
+ Mô tả bài toán
+* Sử dụng cấu trúc dữ liệu Danh sách liên kết vòng đơn (Circular Singly Linked List) để mô phỏng vòng tròn người chơi.
+* Mỗi nút (Node) đại diện cho một người chơi, chứa số thứ tự (`stt`) và con trỏ `next` trỏ đến người ngồi kế tiếp.
+* Nút cuối cùng (người thứ N) trỏ về nút đầu tiên (người thứ 1) để khép kín vòng tròn.
+ Các bước thực hiện
+1. Khởi tạo: Tạo danh sách N phần tử, thực hiện nối vòng.
+2. Duyệt luật chơi:
+    * Sử dụng con trỏ `htai` (hiện tại) và `truoc` (người đứng trước) để duyệt vòng.
+    * Mỗi lượt, di chuyển bộ đôi con trỏ này qua M bước truyền bóng.
+    * Thực hiện loại bỏ nút tại vị trí `htai` bằng cách cập nhật `truoc->next = htai->next`.
+    * Giải phóng bộ nhớ (`delete`) nút bị loại và lặp lại cho đến khi chỉ còn 1 nút duy nhất.
+3. Kết quả: Trả về giá trị `stt` của nút cuối cùng còn sót lại.
+## 2. Phân tích độ phức tạp thuật toán (với M=1)
+Dựa trên giải thuật đã cài đặt:
+* Độ phức tạp thời gian (Time Complexity): $O(N)$. Trong trường hợp M = 1, mỗi lượt chơi con trỏ chỉ di chuyển 1 bước để xác định người bị loại. Thao tác xóa một nút trong danh sách liên kết có chi phí là hằng số $O(1)$. Tổng cộng cần loại bỏ $N-1$ người, do đó tổng thời gian chạy tỉ lệ thuận với $N$.
+* Độ phức tạp không gian (Space Complexity): $O(N)$. Cần cấp phát bộ nhớ cho N nút để duy trì danh sách liên kết vòng.
+## 3. Test case:
+| STT | Loại Test Case | Đầu vào (N, M) | Kết quả thực tế | Trạng thái |
+| :-- | :--- | :--- | :--- | :--- |
+| 1 | Khớp ví dụ đề bài | N=5, M=1 | Người thắng: 3 | Pass |
+| 2 | Trường hợp M = 0 | N=5, M=0 | Người thắng: 5| Pass |
+| 3 | Trường hợp M = 2 | N=5, M=2 | Người thắng: 4 | Pass |
+| 4 | Trường hợp M = 3 | N=5, M=3 | Người thắng: 1 | Pass |
+| 5 | Dữ liệu lớn (N > 100k)| N=100.005, M=1| Phản hồi nhanh | Pass |
