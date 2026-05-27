@@ -45,3 +45,18 @@ void sapxepvundong(vector<int>& mangdangxet) {
         intrangthaimang(mangdangxet);
     }
 }
+int main() {
+    //cây ví dụ trong Slide
+    vector<int> mang1 = {4, 1, 3, 2, 16, 9, 10, 14, 8, 7};
+    // cây ví dụ trên bảng
+    vector<int> mang2 = {203, 106, 78, 84, 59, 15, 32, 16, 10, 17, 38, 11};
+    cout << "Cay trong slide" << endl;
+    cout << "Mang ban dau: ";
+    intrangthaimang(mang1);
+    sapxepvundong(mang1);
+    cout << "\nCay tren bang" << endl;
+    cout << "Mang ban dau: ";
+    intrangthaimang(mang2);
+    sapxepvundong(mang2);
+    return 0;
+}
