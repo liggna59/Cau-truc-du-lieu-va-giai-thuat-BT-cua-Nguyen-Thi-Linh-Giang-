@@ -26,3 +26,22 @@ void vundong(vector<int>& mangdangxet, int n, int i) {
         vundong(mangdangxet, n, lonnhat);
     }
 }
+// Hàm sắp xếp vun đống
+void sapxepvundong(vector<int>& mangdangxet) {
+    int n = mangdangxet.size();
+    cout << "Tao dong ban dau" << endl;
+    for (int i = n / 2 - 1; i >= 0; i--) {
+        vundong(mangdangxet, n, i);
+        cout << "Sau khi vun dong tai node" << i << ": ";
+        intrangthaimang(mangdangxet);
+    }
+    cout << "Sap xep vun dong " << endl;
+    for (int i = n - 1; i > 0; i--) {
+        swap(mangdangxet[0], mangdangxet[i]);
+        cout << "Hoan vi nut goc  voi mang dang xet[" << i << "]: ";
+        intrangthaimang(mangdangxet);
+        vundong(mangdangxet, i, 0);
+        cout << "Vun dong lai nut goc: ";
+        intrangthaimang(mangdangxet);
+    }
+}
