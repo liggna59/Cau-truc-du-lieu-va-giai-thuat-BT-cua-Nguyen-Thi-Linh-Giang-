@@ -1,66 +1,19 @@
-# Bài Tập Tuần 12 - Sắp Xếp Vun Đống (Heap Sort)
-## Đề bài: Cài đặt giải thuật sắp xếp vun đống cho các cây ví dụ trong slide và trên bảng, in ra từng trạng thái lưu trữ cho mỗi bước vun đống và sắp xếp 
-## Dữ liệu đầu vào
-Chương trình chạy thử nghiệm trên 2 tập dữ liệu:
-1. **Cây ví dụ trong slide:** `[4, 1, 3, 2, 16, 9, 10, 14, 8, 7]`
-2. **Cây ví dụ trên bảng:** `[203, 106, 78, 84, 59, 15, 32, 16, 10, 17, 38, 11]` (da qua vun dong)
-Kết quả: 
-## Cay trong slide
-Mang ban dau: [ 4 1 3 2 16 9 10 14 8 7 ]
-Tao dong ban dau
-Sau khi vun dong tai node4: [ 4 1 3 2 16 9 10 14 8 7 ]
-Sau khi vun dong tai node3: [ 4 1 3 14 16 9 10 2 8 7 ]
-Sau khi vun dong tai node2: [ 4 1 10 14 16 9 3 2 8 7 ]
-Sau khi vun dong tai node1: [ 4 16 10 14 7 9 3 2 8 1 ]
-Sau khi vun dong tai node0: [ 16 14 10 8 7 9 3 2 4 1 ]
-Sap xep vun dong 
-Hoan vi nut goc  voi mang dang xet[9]: [ 1 14 10 8 7 9 3 2 4 16 ]
-Vun dong lai nut goc: [ 14 8 10 4 7 9 3 2 1 16 ]
-Hoan vi nut goc  voi mang dang xet[8]: [ 1 8 10 4 7 9 3 2 14 16 ]
-Vun dong lai nut goc: [ 10 8 9 4 7 1 3 2 14 16 ]
-Hoan vi nut goc  voi mang dang xet[7]: [ 2 8 9 4 7 1 3 10 14 16 ]
-Vun dong lai nut goc: [ 9 8 3 4 7 1 2 10 14 16 ]
-Hoan vi nut goc  voi mang dang xet[6]: [ 2 8 3 4 7 1 9 10 14 16 ]
-Vun dong lai nut goc: [ 8 7 3 4 2 1 9 10 14 16 ]
-Hoan vi nut goc  voi mang dang xet[5]: [ 1 7 3 4 2 8 9 10 14 16 ]
-Vun dong lai nut goc: [ 7 4 3 1 2 8 9 10 14 16 ]
-Hoan vi nut goc  voi mang dang xet[4]: [ 2 4 3 1 7 8 9 10 14 16 ]
-Vun dong lai nut goc: [ 4 2 3 1 7 8 9 10 14 16 ]
-Hoan vi nut goc  voi mang dang xet[3]: [ 1 2 3 4 7 8 9 10 14 16 ]
-Vun dong lai nut goc: [ 3 2 1 4 7 8 9 10 14 16 ]
-Hoan vi nut goc  voi mang dang xet[2]: [ 1 2 3 4 7 8 9 10 14 16 ]
-Vun dong lai nut goc: [ 2 1 3 4 7 8 9 10 14 16 ]
-Hoan vi nut goc  voi mang dang xet[1]: [ 1 2 3 4 7 8 9 10 14 16 ]
-Vun dong lai nut goc: [ 1 2 3 4 7 8 9 10 14 16 ]
-##  Cay tren bang
-Mang ban dau: [ 203 106 78 84 59 15 32 16 10 17 38 11 ]
-Tao dong ban dau
-Sau khi vun dong tai node5: [ 203 106 78 84 59 15 32 16 10 17 38 11 ]
-Sau khi vun dong tai node4: [ 203 106 78 84 59 15 32 16 10 17 38 11 ]
-Sau khi vun dong tai node3: [ 203 106 78 84 59 15 32 16 10 17 38 11 ]
-Sau khi vun dong tai node2: [ 203 106 78 84 59 15 32 16 10 17 38 11 ]
-Sau khi vun dong tai node1: [ 203 106 78 84 59 15 32 16 10 17 38 11 ]
-Sau khi vun dong tai node0: [ 203 106 78 84 59 15 32 16 10 17 38 11 ]
-Sap xep vun dong 
-Hoan vi nut goc  voi mang dang xet[11]: [ 11 106 78 84 59 15 32 16 10 17 38 203 ]
-Vun dong lai nut goc: [ 106 84 78 16 59 15 32 11 10 17 38 203 ]
-Hoan vi nut goc  voi mang dang xet[10]: [ 38 84 78 16 59 15 32 11 10 17 106 203 ]
-Vun dong lai nut goc: [ 84 59 78 16 38 15 32 11 10 17 106 203 ]
-Hoan vi nut goc  voi mang dang xet[9]: [ 17 59 78 16 38 15 32 11 10 84 106 203 ]
-Vun dong lai nut goc: [ 78 59 32 16 38 15 17 11 10 84 106 203 ]
-Hoan vi nut goc  voi mang dang xet[8]: [ 10 59 32 16 38 15 17 11 78 84 106 203 ]
-Vun dong lai nut goc: [ 59 38 32 16 10 15 17 11 78 84 106 203 ]
-Hoan vi nut goc  voi mang dang xet[7]: [ 11 38 32 16 10 15 17 59 78 84 106 203 ]
-Vun dong lai nut goc: [ 38 16 32 11 10 15 17 59 78 84 106 203 ]
-Hoan vi nut goc  voi mang dang xet[6]: [ 17 16 32 11 10 15 38 59 78 84 106 203 ]
-Vun dong lai nut goc: [ 32 16 17 11 10 15 38 59 78 84 106 203 ]
-Hoan vi nut goc  voi mang dang xet[5]: [ 15 16 17 11 10 32 38 59 78 84 106 203 ]
-Vun dong lai nut goc: [ 17 16 15 11 10 32 38 59 78 84 106 203 ]
-Hoan vi nut goc  voi mang dang xet[4]: [ 10 16 15 11 17 32 38 59 78 84 106 203 ]
-Vun dong lai nut goc: [ 16 11 15 10 17 32 38 59 78 84 106 203 ]
-Hoan vi nut goc  voi mang dang xet[3]: [ 10 11 15 16 17 32 38 59 78 84 106 203 ]
-Vun dong lai nut goc: [ 15 11 10 16 17 32 38 59 78 84 106 203 ]
-Hoan vi nut goc  voi mang dang xet[2]: [ 10 11 15 16 17 32 38 59 78 84 106 203 ]
-Vun dong lai nut goc: [ 11 10 15 16 17 32 38 59 78 84 106 203 ]
-Hoan vi nut goc  voi mang dang xet[1]: [ 10 11 15 16 17 32 38 59 78 84 106 203 ]
-Vun dong lai nut goc: [ 10 11 15 16 17 32 38 59 78 84 106 203 ]
+# Bài Tập Tuần 13 - Cấu trúc dữ liệu và Giải thuật
+ Cài đặt Cây Nhị Phân Tìm Kiếm (Binary Search Tree - BST) và phân tích độ phức tạp thuật toán.
+## 1. Yêu cầu bài toán
+- Cài đặt cấu trúc Cây nhị phân tìm kiếm (BST) bằng C++.
+- Thêm dãy số năm sinh vào cây: `2001, 2002, 2006, 2007, 2003, 2004, 2005, 2001, 1999, 2004`.
+- Thực hiện thuật toán tìm kiếm một giá trị (Ví dụ: `2004`) và in ra trình tự các nút duyệt qua.
+- Tính toán và đánh giá độ phức tạp của thuật toán tìm kiếm.
+## 2. Phân tích độ phức tạp thuật toán tìm kiếm trên BST
+Quá trình tìm kiếm trên Cây nhị phân tìm kiếm phụ thuộc trực tiếp vào **chiều cao của cây (h)**. Tại mỗi bước duyệt, thuật toán so sánh giá trị cần tìm với nút hiện tại và quyết định rẽ nhánh trái hoặc phải. 
+Độ phức tạp cụ thể như sau:
+* **Trường hợp tốt nhất (Best Case): `O(1)`**
+  Xảy ra khi phần tử cần tìm nằm ngay tại nút gốc (Root) của cây. Thuật toán chỉ cần thực hiện 1 phép so sánh duy nhất và kết thúc ngay lập tức.
+* **Trường hợp trung bình (Average Case): `O(log n)`**
+  Xảy ra khi dữ liệu đầu vào ngẫu nhiên, giúp cây phát triển tương đối cân bằng. Tại mỗi bước rẽ nhánh, thuật toán loại bỏ được khoảng một nửa số lượng nút (tương tự như thuật toán tìm kiếm nhị phân).
+* **Trường hợp xấu nhất (Worst Case): `O(n)`**
+  Xảy ra khi mảng dữ liệu đầu vào đã được sắp xếp sẵn (tăng dần hoặc giảm dần). Lúc này, cây BST bị mất cân bằng nghiêm trọng và "suy biến" thành một danh sách liên kết đơn (lệch hoàn toàn về nhánh trái hoặc phải). Thuật toán sẽ phải duyệt qua tuần tự từng nút từ trên xuống dưới.
+## 4. Kết quả thực thi
+Khi tìm kiếm năm sinh `2004` trong cây, chương trình in ra kết quả:
+> Trinh tu duyet cay: 2001 -> 2002 -> 2006 -> 2003 -> 2004 (Da tim thay gtri can tim)

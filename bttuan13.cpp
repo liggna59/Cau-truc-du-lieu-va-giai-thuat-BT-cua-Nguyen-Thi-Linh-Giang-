@@ -16,7 +16,7 @@ node* them(node* goc, int x) {
     if (goc == NULL) {
         return new node(x);
     }
-    if (x <= goc->gtri) {
+    if (x < goc->gtri) {
         goc->trai = them(goc->trai, x);
     } else {
         goc->phai = them(goc->phai, x);
@@ -35,7 +35,7 @@ bool timkiem(node* goc, int x) {
         return true;
     }
     cout << " -> ";
-    if (x <= goc->gtri) {
+    if (x < goc->gtri) {
         return timkiem(goc->trai, x);
     } else {
         return timkiem(goc->phai, x);
