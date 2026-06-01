@@ -1,5 +1,4 @@
 #include <iostream>
-#include <vector>
 using namespace std;
 // Cau truc mot nut tren cay
 struct node {
@@ -41,4 +40,17 @@ bool timkiem(node* goc, int x) {
     } else {
         return timkiem(goc->phai, x);
     }
+}
+int main() {
+    int dayso[] = {2001, 2002, 2006, 2007, 2003, 2004, 2005, 2001, 1999, 2004};
+    int n = sizeof(dayso) / sizeof(dayso[0]);
+    node* goc = NULL;
+    for (int i = 0; i < n; i++) {
+        goc = them(goc, dayso[i]);
+    }
+    int k = 2004; 
+    cout << "\nTim nam sinh " << k << " tren cay:" << endl;
+    cout << "Trinh tu duyet cay: ";
+    timkiem(goc, k);
+    return 0;
 }
