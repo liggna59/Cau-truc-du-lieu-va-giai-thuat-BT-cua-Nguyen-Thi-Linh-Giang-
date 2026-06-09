@@ -52,9 +52,43 @@ Node *xoayphai(Node *y) {
 }
 // Lay he so can bang cua nut N
 int laycbang(Node *N) {
-    if (N == NULL)
+    if (N == NULL) // Nút rỗng thì độ lệch bằng 0
         return 0;
     return cao(N->trai) - cao(N->phai);
+}
+// Ham chen mot gia tri vao cay AVL
+Node* insert(Node* node, int so) //chen nhu cay nhi phan tim kiem binh thuong
+{ 
+    if (node == NULL)
+        return newNode(so);
+    if (so <node->so)
+        node-> trai = insert(node->trai, so);
+    else if (so > node->so)
+        node->phai = insert(node->phai, so);
+    else 
+        return node;
+    //Cap nhat chieu cao cua node to tien nay
+    node->cao = 1 + max(cao(node->trai), cao(node->phai));
+    //Lay he so can bang de kiem tra xem nut nay co bi mat can bang khong
+    int cbang = laycbang(node);
+    // Neu nut bi mat can bang, se co 4 truong hop xay ra:
+    // Truong hop Trai - Trai
+    if (cbang > 1 && so < node->trai->so)
+        return xoayphai(node);
+    // Truong hop Phai Phai
+    if (cbang < -1 && so > node->phai->so)
+        return xoaytrai(node);
+    // Truong hop Trai - Phai
+    if (cbang > 1 && so > node->trai->so) {
+        node->trai = xoaytrai(node->trai);
+        return xoayphai(node);
+    }
+    // Truong hop Phai trai
+    if (cbang < -1 && so < node->phai->so) {
+        node->right = xoayphai(node->phai);
+        return xoaytrai(node);
+    }
+    return node; // Tra ve con tro (khong doi)
 }
 
 
