@@ -85,12 +85,47 @@ Node* insert(Node* node, int so) //chen nhu cay nhi phan tim kiem binh thuong
     }
     // Truong hop Phai trai
     if (cbang < -1 && so < node->phai->so) {
-        node->right = xoayphai(node->phai);
+        node->phai = xoayphai(node->phai);
         return xoaytrai(node);
     }
     return node; // Tra ve con tro (khong doi)
 }
-
-
-
-
+// Ham duyet cay theo thu tu giua ( Trai - Goc - Phai)
+void duyetgiua(Node *goc) {
+    if (goc != NULL) {
+        duyetgiua(goc->trai);
+        cout << goc->so << " ";
+        duyetgiua(goc->phai);
+    }
+}
+// Ham duyet cay theo thu tu truoc (Goc - Trai - Phai) 
+void duyettruoc(Node *goc) {
+    if (goc != NULL) {
+        cout << goc->so << " ";
+        duyettruoc(goc->trai);
+        duyettruoc(goc->phai);
+    }
+}
+int main() {
+    Node *goc = NULL;
+    // Day so dau vao theo yeu cau cua de bai
+    int arr[] = {32, 51, 27, 83, 96, 11, 45, 75, 66, 1, 2, 3, 4, 5, 6, 7, 8, 9};
+    int n = sizeof(arr) / sizeof(arr[0]);
+    // them cac phan tu vao cay AVL
+    for (int i = 0; i < n; i++) {
+        goc = insert(goc, arr[i]);
+    }
+    // In ket qua
+    cout << "Day so dau vao: ";
+    for (int i = 0; i < n; i++) {
+        cout << arr[i] << " ";
+    }
+    cout << endl;
+    cout << "\nDuyet cay theo thu tu giua: \n";
+    duyetgiua(goc);
+    cout << endl;
+    cout << "\nDuyet cay theo thu tu truoc: \n";
+    duyettruoc(goc);
+    cout << endl;
+    return 0;
+}
