@@ -26,4 +26,37 @@ Node* newNode(int so) {
     node->cao = 1; // Nut moi them vao luoon o duoi cung, co chieu cao mac dinh la 1
     return node;
 }
+// Ham xoay phai
+Node *xoayphai(Node *y) {
+    Node *x = y->trai;
+    Node *T2 = x->phai;
+    // Thuc hien xoay
+    x->phai = y;
+    y->trai = T2;
+    // Cap nhat lai chieu cao
+    y->cao = max(cao(y->trai), cao(y->phai)) + 1;
+    x->cao = max(cao(x->trai), cao(x->phai)) + 1;
+    return x; // Tra ve goc moi
+}
+// Ham xoay trai
+    Node *xoaytrai(Node *x) {
+    Node *y = x->phai;
+    Node *T2 = y->trai;
+    // Thuc hien xoay
+    y->trai = x;
+    x->phai = T2;
+    // Cap nhat lai chieu cao
+    x->cao = max(cao(x->trai), cao(x->phai)) + 1;
+    y->cao = max(cao(y->trai), cao(y->phai)) + 1;
+    return y; // Tra ve goc moi
+}
+// Lay he so can bang cua nut N
+int laycbang(Node *N) {
+    if (N == NULL)
+        return 0;
+    return cao(N->trai) - cao(N->phai);
+}
+
+
+
 
