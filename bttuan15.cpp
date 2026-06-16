@@ -21,10 +21,10 @@ struct queue {
     int bot() {
         int gtridau = data[dau];
         dau++;
-        return gia_tri_dau;
+        return gtridau;
     }
 };
-// CẤU TRÚC 1: ĐỒ THỊ LƯU TRỮ BẰNG MA TRẬN KỀ (MẢNG HAI CHIỀU)
+//ĐỒ THỊ LƯU TRỮ BẰNG MA TRẬN KỀ (MẢNG HAI CHIỀU)
 struct dothimatranke {
     int matran[V][V]; 
     void khoitao() {
@@ -35,11 +35,11 @@ struct dothimatranke {
         }
     }
     void themcanh(int u, int v) {
-        ma_tran[u][v] = 1; // Có đường từ u sang v
-        ma_tran[v][u] = 1; // Có đường từ v về u
+        matran[u][v] = 1; // Có đường từ u sang v
+        matran[v][u] = 1; // Có đường từ v về u
     }
     // Hàm duyệt đồ thị theo chiều rộng (BFS) từ một tỉnh bất kỳ
-    void duyetbfs(int tinh_bat_dau) {
+    void duyetbfs(int bdau) {
         bool datham[V]; // mang trang thai
         for (int i = 0; i < V; i++) {
             datham[i] = false; 
@@ -48,7 +48,7 @@ struct dothimatranke {
         q.khoitao();
         datham[bdau] = true; // Đánh dấu đã thăm tỉnh xuất phát (Hà Nội)
         q.them(bdau);    
-        cout << "Ket qua BFS: ";
+        cout << "Ket qua BFS (Ma tran ke): ";
         while (!q.larong()) {
             int u = q.bot(); 
             cout << tendinh[u] << " -> "; 
@@ -57,6 +57,54 @@ struct dothimatranke {
                     datham[v] = true; 
                     q.them(v);  
                 }
+            }
+        }
+        cout << "END\n";
+    }
+};
+// ĐỒ THỊ LƯU TRỮ BẰNG DANH SÁCH LIÊN KẾT
+struct Node {
+    int stt; // Lưu mã số của tỉnh kề (từ 0 đến 10)
+    Node* link; 
+};
+struct dsachke {
+    Node* dau[V]; 
+    void khoitao() {
+        for (int i = 0; i < V; i++) {
+            dau[i] = nullptr; 
+        }
+    }
+    void themdau(int u, int v) {
+        Node* newnode = new Node;      
+        newnode->stt = v;      
+        newnode->link = dau[u];   
+        dau[u] = newnode;          
+    }
+    void themcanh(int u, int v) {
+        themdau(u, v);
+        themdau(v, u); 
+    }
+    void duyetbfs(int bdau) {
+        bool datham[V];
+        for (int i = 0; i < V; i++) {
+            datham[i] = false;
+        }
+        queue q;
+        q.khoitao();
+        datham[bdau] = true; 
+        q.them(bdau);    
+        cout << "Ket qua BFS (Danh sach lien ket): ";
+        while (!q.larong()) {
+            int u = q.bot(); 
+            cout << tendinh[u] << " -> ";
+            Node* temp = dau[u]; 
+            while (temp != nullptr) { 
+                int v = temp->stt; 
+                if (!datham[v]) {    
+                    datham[v] = true;
+                    q.them(v);     
+                }
+                temp = temp->link; 
             }
         }
         cout << "END\n";
