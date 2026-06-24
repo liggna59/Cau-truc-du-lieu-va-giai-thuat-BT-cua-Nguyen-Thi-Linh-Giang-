@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": true,
-      "cwd": "c:/Users/liggn/OneDrive/Desktop/et2100",
-      "program": "c:/Users/liggn/OneDrive/Desktop/et2100/build/Debug/outDebug",
+      "cwd": "d:/Desktop/et2100",
+      "program": "d:/Desktop/et2100/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [

@@ -24,6 +24,24 @@ struct queue {
         return gtridau;
     }
 };
+void duongdi(int luuvet[], int bdau, int kthuc) {
+    if (luuvet[kthuc] == -1) {
+        cout << "Khong co duong di tu " << tendinh[bdau] << " den " << tendinh[kthuc] << "\n";
+        return;
+    }
+    int path[V];
+    int count = 0;
+    int hientai = kthuc;
+    while (hientai != -1) {
+        path[count++] = hientai;
+        hientai = luuvet[hientai];
+    }
+    for (int i = count - 1; i >= 0; i--) {
+        cout << tendinh[path[i]];
+        if (i > 0) cout << " -> ";
+    }
+    cout << "\n";
+}
 //ĐỒ THỊ LƯU TRỮ BẰNG MA TRẬN KỀ (MẢNG HAI CHIỀU)
 struct dothimatranke {
     int matran[V][V]; 
