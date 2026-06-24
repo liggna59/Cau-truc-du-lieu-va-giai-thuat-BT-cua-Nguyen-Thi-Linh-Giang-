@@ -62,6 +62,41 @@ struct dothimatranke {
         for (int i = 0; i < V; i++) {
             datham[i] = false; 
         }
+    void dfstimduong(int u, bool datham[], int luuvet[]) {
+        datham[u] = true;
+        for (int v = 0; v < V; v++) {
+            if (matran[u][v] == 1 && !datham[v]) {
+                luuvet[v] = u;
+                dfstimduong(v, datham, luuvet);
+            }
+        }
+    }
+    void timduongbatky(int nguon, int dich) {
+        bool datham[V] = {false};
+        int luuvet[V];
+        for (int i = 0; i < V; i++) luuvet[i] = -1;
+        dfstimduong(nguon, datham, luuvet);
+        cout << "Duong di bat ky (Ma tran ke): ";
+        induongdi(luuvet, nguon, dich);
+    }
+    void timduongngannhat(int nguon, int dich) {
+        bool datham[V] = {false};
+        int luuvet[V];
+        for (int i = 0; i < V; i++) luuvet[i] = -1;
+        queue q; q.khoitao();
+        datham[nguon] = true; q.them(nguon);
+        while (!q.larong()) {
+            int u = q.bot();
+            if (u == dich) break;
+            for (int v = 0; v < V; v++) {
+                if (matran[u][v] == 1 && !datham[v]) {
+                    datham[v] = true; luuvet[v] = u; q.them(v);
+                }
+            }
+        }
+        cout << "Duong di ngan nhat (Ma tran ke): ";
+        induongdi(luuvet, nguon, dich);
+    }
         queue q;
         q.khoitao();
         datham[bdau] = true; // Đánh dấu đã thăm tỉnh xuất phát (Hà Nội)
