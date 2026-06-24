@@ -142,6 +142,47 @@ struct dsachke {
         for (int i = 0; i < V; i++) {
             datham[i] = false;
         }
+    void dfstimduong(int u, bool datham[], int luuvet[]) {
+        datham[u] = true;
+        Node* temp = dau[u];
+        while (temp != nullptr) {
+            int v = temp->stt;
+            if (!datham[v]) {
+                luuvet[v] = u;
+                dfstimduong(v, datham, luuvet);
+            }
+            temp = temp->link;
+        }
+    }
+    void timduongbatky(int nguon, int dich) {
+        bool datham[V] = {false};
+        int luuvet[V];
+        for (int i = 0; i < V; i++) luuvet[i] = -1;
+        dfstimduong(nguon, datham, luuvet);
+        cout << "Duong di bat ky (DSLK): ";
+        induongdi(luuvet, nguon, dich);
+    }
+    void timduongngannhat(int nguon, int dich) {
+        bool datham[V] = {false};
+        int luuvet[V];
+        for (int i = 0; i < V; i++) luuvet[i] = -1;
+        queue q; q.khoitao();
+        datham[nguon] = true; q.them(nguon);
+        while (!q.larong()) {
+            int u = q.bot();
+            if (u == dich) break;
+            Node* temp = dau[u];
+            while (temp != nullptr) {
+                int v = temp->stt;
+                if (!datham[v]) {
+                    datham[v] = true; luuvet[v] = u; q.them(v);
+                }
+                temp = temp->link;
+            }
+        }
+        cout << "Duong di ngan nhat (DSLK): ";
+        induongdi(luuvet, nguon, dich);
+    }
         queue q;
         q.khoitao();
         datham[bdau] = true; 
