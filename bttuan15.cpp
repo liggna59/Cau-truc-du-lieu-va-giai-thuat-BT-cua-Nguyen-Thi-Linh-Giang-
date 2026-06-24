@@ -209,21 +209,10 @@ struct tuyenduong {
     int v; 
 };
 int main() {
-    const int tong = 13; // Sơ đồ gthong có 13 đường nối (D1 đến D13)
-        tuyenduong dsachduong[tong] = {
-        {0, 1},  // HN (0) nối với TN (1) -> Đường D7 
-        {0, 2},  // HN (0) nối với BN (2) -> Đường D8    
-        {0, 6},  // HN (0) nối với HD (6) -> Đường D1    
-        {0, 8},  // HN (0) nối với PL (8) -> Đường D4    
-        {0, 9},  // HN (0) nối với HB (9) -> Đường D5    
-        {0, 10}, // HN (0) nối với ST (10)-> Đường D6    
-        {2, 3},  // BN (2) nối với BG (3) -> Đường D9    
-        {2, 4},  // BN (2) nối với UB (4) -> Đường D11    
-        {3, 4},  // BG (3) nối với UB (4) -> Đường D10    
-        {4, 5},  // UB (4) nối với HP (5) -> Đường D12    
-        {6, 5},  // HD (6) nối với HP (5) -> Đường D13    
-        {6, 7},  // HD (6) nối với HY (7) -> Đường D2    
-        {8, 7}   // PL (8) nối với HY (7) -> Đường D3    
+    const int tong = 13; 
+    tuyenduong dsachduong[tong] = {
+        {0, 1}, {0, 2}, {0, 6}, {0, 8}, {0, 9}, {0, 10},
+        {2, 3}, {2, 4}, {3, 4}, {4, 5}, {6, 5}, {6, 7}, {8, 7}
     };
     dothimatranke gmatran; 
     gmatran.khoitao(); 
@@ -231,12 +220,16 @@ int main() {
         gmatran.themcanh(dsachduong[i].u, dsachduong[i].v); 
     }
     gmatran.duyetbfs(0); 
-    cout << " "; 
+    gmatran.timduongbatky(0, 5);    // Tìm đường HN -> HP
+    gmatran.timduongngannhat(0, 5);  // Tìm đường ngắn nhất HN -> HP
+    cout << "\n"; 
     dsachke gdsach; 
     gdsach.khoitao(); 
-    for (int i = 0; i < V; i++) {
+    for (int i = 0; i < tong; i++) { 
         gdsach.themcanh(dsachduong[i].u, dsachduong[i].v); 
     }
     gdsach.duyetbfs(0); 
+    gdsach.timduongbatky(0, 5);    // Tìm đường HN -> HP
+    gdsach.timduongngannhat(0, 5);  // Tìm đường ngắn nhất HN -> HP
     return 0;
 }
