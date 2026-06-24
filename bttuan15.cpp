@@ -62,6 +62,23 @@ struct dothimatranke {
         for (int i = 0; i < V; i++) {
             datham[i] = false; 
         }
+        queue q;
+        q.khoitao();
+        datham[bdau] = true; // Đánh dấu đã thăm tỉnh xuất phát (Hà Nội)
+        q.them(bdau);    
+        cout << "Ket qua BFS (Ma tran ke): ";
+        while (!q.larong()) {
+            int u = q.bot(); 
+            cout << tendinh[u] << " -> "; 
+            for (int v = 0; v < V; v++) {
+                if (matran[u][v] == 1 && !datham[v]) {
+                    datham[v] = true; 
+                    q.them(v);  
+                }
+            }
+        }
+        cout << "END\n";
+    }
     void dfstimduong(int u, bool datham[], int luuvet[]) {
         datham[u] = true;
         for (int v = 0; v < V; v++) {
@@ -77,7 +94,7 @@ struct dothimatranke {
         for (int i = 0; i < V; i++) luuvet[i] = -1;
         dfstimduong(nguon, datham, luuvet);
         cout << "Duong di bat ky (Ma tran ke): ";
-        induongdi(luuvet, nguon, dich);
+        duongdi(luuvet, nguon, dich);
     }
     void timduongngannhat(int nguon, int dich) {
         bool datham[V] = {false};
@@ -95,24 +112,7 @@ struct dothimatranke {
             }
         }
         cout << "Duong di ngan nhat (Ma tran ke): ";
-        induongdi(luuvet, nguon, dich);
-    }
-        queue q;
-        q.khoitao();
-        datham[bdau] = true; // Đánh dấu đã thăm tỉnh xuất phát (Hà Nội)
-        q.them(bdau);    
-        cout << "Ket qua BFS (Ma tran ke): ";
-        while (!q.larong()) {
-            int u = q.bot(); 
-            cout << tendinh[u] << " -> "; 
-            for (int v = 0; v < V; v++) {
-                if (matran[u][v] == 1 && !datham[v]) {
-                    datham[v] = true; 
-                    q.them(v);  
-                }
-            }
-        }
-        cout << "END\n";
+        duongdi(luuvet, nguon, dich);
     }
 };
 // ĐỒ THỊ LƯU TRỮ BẰNG DANH SÁCH LIÊN KẾT
@@ -142,6 +142,26 @@ struct dsachke {
         for (int i = 0; i < V; i++) {
             datham[i] = false;
         }
+        queue q;
+        q.khoitao();
+        datham[bdau] = true; 
+        q.them(bdau);    
+        cout << "Ket qua BFS (Danh sach lien ket): ";
+        while (!q.larong()) {
+            int u = q.bot(); 
+            cout << tendinh[u] << " -> ";
+            Node* temp = dau[u]; 
+            while (temp != nullptr) { 
+                int v = temp->stt; 
+                if (!datham[v]) {    
+                    datham[v] = true;
+                    q.them(v);     
+                }
+                temp = temp->link; 
+            }
+        }
+        cout << "END\n";
+    }
     void dfstimduong(int u, bool datham[], int luuvet[]) {
         datham[u] = true;
         Node* temp = dau[u];
@@ -160,7 +180,7 @@ struct dsachke {
         for (int i = 0; i < V; i++) luuvet[i] = -1;
         dfstimduong(nguon, datham, luuvet);
         cout << "Duong di bat ky (DSLK): ";
-        induongdi(luuvet, nguon, dich);
+        duongdi(luuvet, nguon, dich);
     }
     void timduongngannhat(int nguon, int dich) {
         bool datham[V] = {false};
@@ -181,27 +201,7 @@ struct dsachke {
             }
         }
         cout << "Duong di ngan nhat (DSLK): ";
-        induongdi(luuvet, nguon, dich);
-    }
-        queue q;
-        q.khoitao();
-        datham[bdau] = true; 
-        q.them(bdau);    
-        cout << "Ket qua BFS (Danh sach lien ket): ";
-        while (!q.larong()) {
-            int u = q.bot(); 
-            cout << tendinh[u] << " -> ";
-            Node* temp = dau[u]; 
-            while (temp != nullptr) { 
-                int v = temp->stt; 
-                if (!datham[v]) {    
-                    datham[v] = true;
-                    q.them(v);     
-                }
-                temp = temp->link; 
-            }
-        }
-        cout << "END\n";
+        duongdi(luuvet, nguon, dich);
     }
 };
 struct tuyenduong {
