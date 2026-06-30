@@ -169,7 +169,7 @@ struct dothimatranke {
                 }
             }
         }
-        cout << "\nCay khung nho nhat - Tong chieu dai MST (Prim): " << tongtrongso;
+        cout << "\nCay khung nho nhat (Thuat toan Prim)" << " Tong chieu dai MST (Prim): " << tongtrongso;
         for (int i = 0; i < V; i++) cout << tendinh[i] << "  ";
         cout << "\n";
         for (int i = 0; i < V; i++) {
@@ -182,6 +182,56 @@ struct dothimatranke {
                     else cout << matranmst[i][j] << " ";
                 }         
                }
+            cout << "\n";
+        }
+    }
+    struct CanhKruskal { int u, v, w; };
+    int timgoc(int cha[], int i) {
+        while (cha[i] != -1) i = cha[i];
+        return i;
+    }
+    void gop(int cha[], int x, int y) { cha[x] = y; }
+    void kruskal(int tongsocanh, int dsu[], int dsv[], int dsw[]) {
+        CanhKruskal dscanh[50];
+        for (int i = 0; i < tongsocanh; i++) {
+            dscanh[i].u = dsu[i]; dscanh[i].v = dsv[i]; dscanh[i].w = dsw[i];
+        }
+        for (int i = 0; i < tongsocanh - 1; i++) {
+            for (int j = 0; j < tongsocanh - i - 1; j++) {
+                if (dscanh[j].w > dscanh[j+1].w) {
+                    CanhKruskal temp = dscanh[j]; dscanh[j] = dscanh[j+1]; dscanh[j+1] = temp;
+                }
+            }
+        }
+        int chataphop[V]; for (int i = 0; i < V; i++) chataphop[i] = -1;
+        int matrankruskal[V][V];
+        for (int i = 0; i < V; i++)
+            for (int j = 0; j < V; j++) matrankruskal[i][j] = 0;
+        int tongtrongso = 0; int dem_canh_mst = 0;
+        for (int i = 0; i < tongsocanh; i++) {
+            if (dem_canh_mst == V - 1) break;
+            int x = timgoc(chataphop, dscanh[i].u);
+            int y = timgoc(chataphop, dscanh[i].v);
+            if (x != y) {
+                matrankruskal[dscanh[i].u][dscanh[i].v] = dscanh[i].w;
+                matrankruskal[dscanh[i].v][dscanh[i].u] = dscanh[i].w;
+                tongtrongso += dscanh[i].w; dem_canh_mst++;
+                gop(chataphop, x, y);
+            }
+        }
+        cout << "\nCay khung nho nhat (thuat toan Krruskal) \n"<< "Tong chieu dai MST: " << tongtrongso << " km\n    ";
+        for (int i = 0; i < V; i++) cout << tendinh[i] << "  ";
+        cout << "\n";
+        for (int i = 0; i < V; i++) {
+            cout << tendinh[i] << "  ";
+            for (int j = 0; j < V; j++) {
+                if (matrankruskal[i][j] == 0) cout << "0   ";
+                else {
+                    if (matrankruskal[i][j] < 10) cout << matrankruskal[i][j] << "   ";
+                    else if (matrankruskal[i][j] < 100) cout << matrankruskal[i][j] << "  ";
+                    else cout << matrankruskal[i][j] << " ";
+                }
+            }
             cout << "\n";
         }
     }
