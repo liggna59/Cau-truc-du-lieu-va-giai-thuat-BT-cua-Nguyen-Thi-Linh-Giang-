@@ -219,7 +219,7 @@ struct dothimatranke {
                 gop(chataphop, x, y);
             }
         }
-        cout << "\nCay khung nho nhat (thuat toan Krruskal) \n"<< "Tong chieu dai MST: " << tongtrongso << " km\n    ";
+        cout << "\nCay khung nho nhat (thuat toan Krruskal) \n"<< "Tong chieu dai MST: " << tongtrongso;
         for (int i = 0; i < V; i++) cout << tendinh[i] << "  ";
         cout << "\n";
         for (int i = 0; i < V; i++) {
@@ -331,26 +331,19 @@ struct tuyenduong {
 };
 int main() {
     const int tong = 13; 
-    tuyenduong dsachduong[tong] = {
-        {0, 1}, {0, 2}, {0, 6}, {0, 8}, {0, 9}, {0, 10},
-        {2, 3}, {2, 4}, {3, 4}, {4, 5}, {6, 5}, {6, 7}, {8, 7}
-    };
+    int dsu[tong] = {0, 0, 0, 0, 0, 0,  2, 2, 3, 4, 6, 6, 8}; // dinh nguon
+    int dsv[tong] = {1, 2, 6, 8, 9, 10, 3, 4, 4, 5, 5, 7, 7}; // dinh dich
+    int dsw[tong] = {75, 31, 57, 58, 76, 42, 15, 105, 90, 45, 45, 28, 33}; //khoang cach 
     dothimatranke gmatran; 
     gmatran.khoitao(); 
     for (int i = 0; i < tong; i++) {
-        gmatran.themcanh(dsachduong[i].u, dsachduong[i].v); 
+        gmatran.themcanh(dsu[i], dsv[i], dsw[i]); // Nạp cạnh kèm trọng số
     }
-    gmatran.duyetbfs(0); 
-    gmatran.timduongbatky(0, 5);    // Tìm đường HN -> HP
-    gmatran.timduongngannhat(0, 5);  // Tìm đường ngắn nhất HN -> HP
-    cout << "\n"; 
-    dsachke gdsach; 
-    gdsach.khoitao(); 
-    for (int i = 0; i < tong; i++) { 
-        gdsach.themcanh(dsachduong[i].u, dsachduong[i].v); 
-    }
-    gdsach.duyetbfs(0); 
-    gdsach.timduongbatky(0, 5);    // Tìm đường HN -> HP
-    gdsach.timduongngannhat(0, 5);  // Tìm đường ngắn nhất HN -> HP
+    // 1. Tìm đường đi ngắn nhất bằng Dijkstra từ Hà Nội (0) đi Hải Phòng (5)
+    gmatran.dijkstra(0, 5); 
+    // 2. Tìm và xuất ma trận đỉnh kề của cây khung nhỏ nhất (MST) theo Prim
+    gmatran.prim(); 
+    // 3. Tìm và xuất ma trận đỉnh kề của cây khung nhỏ nhất (MST) theo Kruskal
+    gmatran.kruskal(tong, dsu, dsv, dsw); 
     return 0;
 }
