@@ -145,6 +145,46 @@ struct dothimatranke {
              return; }
         duongdi(luuvet, nguon, dich);
     }
+    void prim() {
+        int gancan[V]; int cha[V]; bool trangthai[V];
+        for (int i = 0; i < V; i++) { gancan[i] = vocung; trangthai[i] = false; cha[i] = -1; }
+        gancan[0] = 0;
+        int matranmst[V][V];
+        for (int i = 0; i < V; i++)
+            for (int j = 0; j < V; j++) matranmst[i][j] = 0;
+        int tongtrongso = 0;
+        for (int step = 0; step < V; step++) {
+            int u = -1; int min_gancan = vocung;
+            for (int i = 0; i < V; i++) {
+                if (!trangthai[i] && gancan[i] < min_gancan) { min_gancan = gancan[i]; u = i; }
+            }
+            if (u == -1) break;
+            trangthai[u] = true; tongtrongso += min_gancan;
+            if (cha[u] != -1) {
+                matranmst[cha[u]][u] = matran[cha[u]][u]; matranmst[u][cha[u]] = matran[cha[u]][u];
+            }
+            for (int v = 0; v < V; v++) {
+                if (matran[u][v] != vocung && !trangthai[v] && matran[u][v] < gancan[v]) {
+                    gancan[v] = matran[u][v]; cha[v] = u;
+                }
+            }
+        }
+        cout << "\nCay khung nho nhat - Tong chieu dai MST (Prim): " << tongtrongso;
+        for (int i = 0; i < V; i++) cout << tendinh[i] << "  ";
+        cout << "\n";
+        for (int i = 0; i < V; i++) {
+            cout << tendinh[i] << "  ";
+            for (int j = 0; j < V; j++) {
+                if (matranmst[i][j] == 0) cout << "0   ";
+                else {
+                    if (matranmst[i][j] < 10) cout << matranmst[i][j] << "   ";
+                    else if (matranmst[i][j] < 100) cout << matranmst[i][j] << "  ";
+                    else cout << matranmst[i][j] << " ";
+                }         
+               }
+            cout << "\n";
+        }
+    }
 };
 // ĐỒ THỊ LƯU TRỮ BẰNG DANH SÁCH LIÊN KẾT
 struct Node {
