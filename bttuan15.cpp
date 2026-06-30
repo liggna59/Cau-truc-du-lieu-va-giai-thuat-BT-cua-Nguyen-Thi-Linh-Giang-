@@ -3,6 +3,7 @@ using namespace std;
 const int V = 11; // Tổng số 11 tỉnh thành trong hệ thống giao thông
 // Chỉ số mảng: 0->HN, 1->TN, 2->BN, 3->BG, 4->UB, 5->HP, 6->HD, 7->HY, 8->PL, 9->HB, 10->ST
 const char* tendinh[V] = {"HN", "TN", "BN", "BG", "UB", "HP", "HD", "HY", "PL", "HB", "ST"};
+const int vocung = 999999;
 struct queue {
     int data[V + 1]; 
     int dau;                 // Vị trí đầu hàng đợi (để lấy phần tử ra)
@@ -48,13 +49,15 @@ struct dothimatranke {
     void khoitao() {
         for (int i = 0; i < V; i++) {
             for (int j = 0; j < V; j++) {
-                matran[i][j] = 0; 
+                if ( i== j) matran[i][j] = 0; 
+                else
+                matran[i][j] = vocung; 
             }
         }
     }
-    void themcanh(int u, int v) {
-        matran[u][v] = 1; // Có đường từ u sang v
-        matran[v][u] = 1; // Có đường từ v về u
+    void themcanh(int u, int v, int w = 1) {
+        matran[u][v] = w; // Có đường từ u sang v
+        matran[v][u] = w; // Có đường từ v về u
     }
     // Hàm duyệt đồ thị theo chiều rộng (BFS) từ một tỉnh bất kỳ
     void duyetbfs(int bdau) {
@@ -112,6 +115,34 @@ struct dothimatranke {
             }
         }
         cout << "Duong di ngan nhat (Ma tran ke): ";
+        duongdi(luuvet, nguon, dich);
+    }
+    void dijkstra(int nguon, int dich) {
+        int d[V];        // duong di ngan nhat tu nguon
+        bool dinhchuacodinh[V]; 
+        int luuvet[V];  
+        for (int i = 0; i < V; i++) {
+            d[i] = vocung; dinhchuacodinh[i] = true; luuvet[i] = -1;
+        }
+        d[nguon] = 0;
+        for (int step = 0; step < V - 1; step++) {
+            int u = -1; int dmin = vocung;
+            for (int i = 0; i < V; i++) {
+                if (dinhchuacodinh[i] && d[i] < dmin) { dmin = d[i]; u = i; }
+            }
+            if (u == -1 || u == dich) break;
+            dinhchuacodinh[u] = false;
+            for (int v = 0; v < V; v++) {
+                if (matran[u][v] != vocung && dinhchuacodinh[v]) {
+                    if (d[v] > d[u] + matran[u][v]) {
+                        d[v] = d[u] + matran[u][v]; luuvet[v] = u;
+                    }
+                }
+            }
+        }
+        cout << "Duong di ngan nhat tu (Thuat toan Dijkstra) " << tendinh[nguon] << " den " << tendinh[dich] << " (Tong: " << d[dich];
+        if (d[dich] == vocung) { cout << "Khong co duong di\n";
+             return; }
         duongdi(luuvet, nguon, dich);
     }
 };
